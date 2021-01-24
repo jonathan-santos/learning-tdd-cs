@@ -2,8 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>learning_tdd_cs</RootNamespace>
-
+    <RootNamespace>LearningTDD</RootNamespace>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
