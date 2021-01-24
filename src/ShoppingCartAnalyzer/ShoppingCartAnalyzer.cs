@@ -1,11 +1,11 @@
-namespace GreaterAndLesser
+namespace ShoppingCartAnalyzer
 {
-    public class ShoppingCartAnalyzer
+    public class Analyzer
     {
         public Product MostExpensive { get; private set; }
         public Product Cheapest { get; private set; }
 
-        public ShoppingCartAnalyzer(ShoppingCart cart)
+        public Analyzer(ShoppingCart cart)
         {
             foreach (var product in cart.Products)
             {

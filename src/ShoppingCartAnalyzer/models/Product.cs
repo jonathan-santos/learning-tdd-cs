@@ -1,4 +1,4 @@
-namespace GreaterAndLesser
+namespace ShoppingCartAnalyzer
 {
     public class Product
     {

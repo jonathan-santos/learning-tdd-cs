@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace GreaterAndLesser
+namespace ShoppingCartAnalyzer
 {
     public class TestShoppingCartAnalyzer
     {
@@ -12,7 +12,7 @@ namespace GreaterAndLesser
             cart.Add(new Product("Blender", 250.00));
             cart.Add(new Product("Set of Dishes", 70.00));
 
-            var data = new ShoppingCartAnalyzer(cart);
+            var data = new Analyzer(cart);
             Assert.AreEqual(data.Cheapest.Name, "Set of Dishes");
             Assert.AreEqual(data.MostExpensive.Name, "Fridge");
         }
@@ -25,7 +25,7 @@ namespace GreaterAndLesser
             cart.Add(new Product("Blender", 250.00));
             cart.Add(new Product("Fridge", 450.00));
 
-            var data = new ShoppingCartAnalyzer(cart);
+            var data = new Analyzer(cart);
             Assert.AreEqual(data.Cheapest.Name, "Set of Dishes");
             Assert.AreEqual(data.MostExpensive.Name, "Fridge");
         }
@@ -38,7 +38,7 @@ namespace GreaterAndLesser
             cart.Add(new Product("Set of Dishes", 70.00));
             cart.Add(new Product("Fridge", 450.00));
 
-            var data = new ShoppingCartAnalyzer(cart);
+            var data = new Analyzer(cart);
             Assert.AreEqual(data.Cheapest.Name, "Set of Dishes");
             Assert.AreEqual(data.MostExpensive.Name, "Fridge");
         }
@@ -49,7 +49,7 @@ namespace GreaterAndLesser
             var cart = new ShoppingCart();
             cart.Add(new Product("Blender", 250.00));
 
-            var data = new ShoppingCartAnalyzer(cart);
+            var data = new Analyzer(cart);
             Assert.AreEqual(data.Cheapest.Name, "Blender");
             Assert.AreEqual(data.MostExpensive.Name, "Blender");
         }

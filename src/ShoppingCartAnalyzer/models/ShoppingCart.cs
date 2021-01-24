@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace GreaterAndLesser
+namespace ShoppingCartAnalyzer
 {
     public class ShoppingCart
     {
