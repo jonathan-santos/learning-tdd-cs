@@ -5,53 +5,63 @@ namespace ShoppingCartAnalyzer
     public class TestShoppingCartAnalyzer
     {
         [Test]
-        public void DecreasingOrder()
+        public void DecreasingOrderMostExpensiveAndLeastExpensiveProducts()
         {
             var cart = new ShoppingCart();
             cart.Add(new Product("Fridge", 450.00), 1);
             cart.Add(new Product("Blender", 250.00), 1);
             cart.Add(new Product("Set of Dishes", 70.00), 1);
 
-            var (leastExpensive, mostExpensive) = Analyzer.GetMostExpensiveAndLeastExpensiveProducts(cart);
-            Assert.AreEqual("Set of Dishes", leastExpensive.Name);
-            Assert.AreEqual("Fridge", mostExpensive.Name);
+            var data = cart.GetMostExpensiveAndLeastExpensiveProducts();
+            Assert.AreEqual("Set of Dishes", data.LeastExpensive.Name);
+            Assert.AreEqual("Fridge", data.MostExpensive.Name);
         }
 
         [Test]
-        public void AscendingOrder()
+        public void AscendingOrderMostExpensiveAndLeastExpensiveProducts()
         {
             var cart = new ShoppingCart();
             cart.Add(new Product("Set of Dishes", 70.00), 1);
             cart.Add(new Product("Blender", 250.00), 1);
             cart.Add(new Product("Fridge", 450.00), 1);
 
-            var (leastExpensive, mostExpensive) = Analyzer.GetMostExpensiveAndLeastExpensiveProducts(cart);
-            Assert.AreEqual("Set of Dishes", leastExpensive.Name);
-            Assert.AreEqual("Fridge", mostExpensive.Name);
+            var data = cart.GetMostExpensiveAndLeastExpensiveProducts();
+            Assert.AreEqual("Set of Dishes", data.LeastExpensive.Name);
+            Assert.AreEqual("Fridge", data.MostExpensive.Name);
         }
 
         [Test]
-        public void VariedOrder()
+        public void VariedOrderMostExpensiveAndLeastExpensiveProducts()
         {
             var cart = new ShoppingCart();
             cart.Add(new Product("Blender", 250.00), 1);
             cart.Add(new Product("Set of Dishes", 70.00), 1);
             cart.Add(new Product("Fridge", 450.00), 1);
 
-            var (leastExpensive, mostExpensive) = Analyzer.GetMostExpensiveAndLeastExpensiveProducts(cart);
-            Assert.AreEqual("Set of Dishes", leastExpensive.Name);
-            Assert.AreEqual("Fridge", mostExpensive.Name);
+            var data = cart.GetMostExpensiveAndLeastExpensiveProducts();
+            Assert.AreEqual("Set of Dishes", data.LeastExpensive.Name);
+            Assert.AreEqual("Fridge", data.MostExpensive.Name);
         }
 
         [Test]
-        public void OneProduct()
+        public void OneProductMostExpensiveAndLeastExpensiveProducts()
         {
             var cart = new ShoppingCart();
             cart.Add(new Product("Blender", 250.00), 1);
 
-            var (leastExpensive, mostExpensive) = Analyzer.GetMostExpensiveAndLeastExpensiveProducts(cart);
-            Assert.AreEqual("Blender", leastExpensive.Name);
-            Assert.AreEqual("Blender", mostExpensive.Name);
+            var data = cart.GetMostExpensiveAndLeastExpensiveProducts();
+            Assert.AreEqual("Blender", data.LeastExpensive.Name);
+            Assert.AreEqual("Blender", data.MostExpensive.Name);
+        }
+
+        [Test]
+        public void NoProducstMostExpensiveAndLeastExpensiveProducts()
+        {
+            var cart = new ShoppingCart();
+
+            var data = cart.GetMostExpensiveAndLeastExpensiveProducts();
+            Assert.AreEqual(null, data.LeastExpensive);
+            Assert.AreEqual(null, data.MostExpensive);
         }
     }
 }
