@@ -4,16 +4,16 @@ namespace ShoppingCartAnalyzer
 {
     public class ShoppingCart
     {
-        public List<Product> Products { get; }
+        public List<ShoppingCartItem> Items { get; }
 
         public ShoppingCart()
         {
-            Products = new List<Product>();
+            Items = new List<ShoppingCartItem>();
         }
 
-        public void Add(Product product)
+        public void Add(Product product, int quantity)
         {
-            Products.Add(product);
+            Items.Add(new ShoppingCartItem(product, quantity));
         }
     }
 }
