@@ -31,5 +31,18 @@ namespace ShoppingCartAnalyzer
 
             return (leastEspensive, mostExpensive);
         }
+
+        public double GetHighestItemValue()
+        {
+            var highestValue = 0.00;
+
+            foreach (var item in this.Items)
+            {
+                if (item.TotalValue > highestValue)
+                    highestValue = item.TotalValue;
+            }
+            
+            return highestValue;
+        }
     }
 }
