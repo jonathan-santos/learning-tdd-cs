@@ -4,13 +4,23 @@ namespace ShoppingCartAnalyzer
 {
     public class TestShoppingCartAnalyzer
     {
+        ShoppingCart cart;
+
+        [SetUp]
+        public void Initialize()
+        {
+            this.cart = new ShoppingCart();
+        }
+
         [Test]
         public void DecreasingOrderMostExpensiveAndLeastExpensiveProducts()
         {
-            var cart = new ShoppingCart();
-            cart.Add(new Product("Fridge", 450.00), 1);
-            cart.Add(new Product("Blender", 250.00), 1);
-            cart.Add(new Product("Set of Dishes", 70.00), 1);
+            cart = new ShoppingCartBuilder()
+                .WithItens(new [] {
+                    ("Fridge", 450.00),
+                    ("Blender", 250.00),
+                    ("Set of Dishes", 70.00)
+                }).Build();
 
             var data = cart.GetMostExpensiveAndLeastExpensiveProducts();
             Assert.AreEqual("Set of Dishes", data.LeastExpensive.Name);
@@ -20,10 +30,12 @@ namespace ShoppingCartAnalyzer
         [Test]
         public void AscendingOrderMostExpensiveAndLeastExpensiveProducts()
         {
-            var cart = new ShoppingCart();
-            cart.Add(new Product("Set of Dishes", 70.00), 1);
-            cart.Add(new Product("Blender", 250.00), 1);
-            cart.Add(new Product("Fridge", 450.00), 1);
+            cart = new ShoppingCartBuilder()
+                .WithItens(new [] {
+                    ("Set of Dishes", 70.00),
+                    ("Blender", 250.00),
+                    ("Fridge", 450.00)
+                }).Build();
 
             var data = cart.GetMostExpensiveAndLeastExpensiveProducts();
             Assert.AreEqual("Set of Dishes", data.LeastExpensive.Name);
@@ -33,10 +45,12 @@ namespace ShoppingCartAnalyzer
         [Test]
         public void VariedOrderMostExpensiveAndLeastExpensiveProducts()
         {
-            var cart = new ShoppingCart();
-            cart.Add(new Product("Blender", 250.00), 1);
-            cart.Add(new Product("Set of Dishes", 70.00), 1);
-            cart.Add(new Product("Fridge", 450.00), 1);
+            cart = new ShoppingCartBuilder()
+                .WithItens(new [] {
+                    ("Blender", 250.00),
+                    ("Set of Dishes", 70.00),
+                    ("Fridge", 450.00)
+                }).Build();
 
             var data = cart.GetMostExpensiveAndLeastExpensiveProducts();
             Assert.AreEqual("Set of Dishes", data.LeastExpensive.Name);
@@ -46,8 +60,10 @@ namespace ShoppingCartAnalyzer
         [Test]
         public void OneProductMostExpensiveAndLeastExpensiveProducts()
         {
-            var cart = new ShoppingCart();
-            cart.Add(new Product("Blender", 250.00), 1);
+            cart = new ShoppingCartBuilder()
+                .WithItens(new [] {
+                    ("Blender", 250.00)
+                }).Build();
 
             var data = cart.GetMostExpensiveAndLeastExpensiveProducts();
             Assert.AreEqual("Blender", data.LeastExpensive.Name);
@@ -57,8 +73,6 @@ namespace ShoppingCartAnalyzer
         [Test]
         public void NoProducstMostExpensiveAndLeastExpensiveProducts()
         {
-            var cart = new ShoppingCart();
-
             var data = cart.GetMostExpensiveAndLeastExpensiveProducts();
             Assert.AreEqual(null, data.LeastExpensive);
             Assert.AreEqual(null, data.MostExpensive);
@@ -67,8 +81,6 @@ namespace ShoppingCartAnalyzer
         [Test]
         public void NoProductsHighestItemValue()
         {
-            var cart = new ShoppingCart();
-
             var value = cart.GetHighestItemValue();
             Assert.AreEqual(0.00, value, 0.00001);
         }
@@ -76,8 +88,10 @@ namespace ShoppingCartAnalyzer
         [Test]
         public void OneProductHighestItemValue()
         {
-            var cart = new ShoppingCart();
-            cart.Add(new Product("Blender", 250.00), 1);
+            cart = new ShoppingCartBuilder()
+                .WithItens(new [] {
+                    ( 250.00, 1 ),
+                }).Build();
 
             var value = cart.GetHighestItemValue();
             Assert.AreEqual(250 * 1, value);
@@ -86,13 +100,46 @@ namespace ShoppingCartAnalyzer
         [Test]
         public void MultipleProductsHighestItemValue()
         {
-            var cart = new ShoppingCart();
-            cart.Add(new Product("Blender", 250.00), 2);
-            cart.Add(new Product("Fridge", 450.00), 1);
-            cart.Add(new Product("Set of Dishes", 70.00), 8);
+            cart = new ShoppingCartBuilder()
+                .WithItens(new [] {
+                    ( 250.00, 2 ),
+                    ( 450.00, 1 ),
+                    ( 70.00, 8 )
+                }).Build();
 
             var value = cart.GetHighestItemValue();
             Assert.AreEqual(70 * 8, value);
+        }
+    }
+
+    public class ShoppingCartBuilder
+    {
+        public ShoppingCart cart;
+
+        public ShoppingCartBuilder()
+        {
+            this.cart = new ShoppingCart();
+        }
+
+        public ShoppingCartBuilder WithItens((double price, int quantity)[] items)
+        {
+            foreach (var item in items)
+                cart.Add(new Product("Item", item.price), item.quantity);
+
+            return this;
+        }
+
+        public ShoppingCartBuilder WithItens((string name, double price)[] items)
+        {
+            foreach (var item in items)
+                cart.Add(new Product(item.name, item.price), 1);
+
+            return this;
+        }
+
+        public ShoppingCart Build()
+        {
+            return cart;
         }
     }
 }
